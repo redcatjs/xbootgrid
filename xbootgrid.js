@@ -26,7 +26,7 @@ $.fn.xbootgrid = function(configParam){
 	var handlers = {};
 	
 	$js([
-		'jquery/confirm'
+		'bootstrap-modal-confirm'
 	]);
 	
 	var bootgridGetCellById = function(id,col){
@@ -194,7 +194,7 @@ $.fn.xbootgrid = function(configParam){
 					var title = config.widgetOptions.removeTitle||'Supression de « %s »';
 					var body = config.widgetOptions.removeBody||"Êtes-vous sûr de vouloir supprimer « %s » ?";
 					var ok = config.widgetOptions.removeOk||'Supprimer';
-					$js.invoke('jquery/confirm',self,{
+					$js.invoke('bootstrap-modal-confirm',self,{
 						title:title.replace('%s',name),
 						body:body.replace('%s',name),
 						ok:ok.replace('%s',name)
@@ -284,7 +284,7 @@ $.fn.xbootgrid = function(configParam){
 				var title = config.widgetOptions.removeTitle||'Supression multiple';
 				var body = config.widgetOptions.removeBody||"Êtes-vous sûr de vouloir supprimer « %s » ?";
 				var ok = config.widgetOptions.removeOk||'Supprimer';
-				$js.invoke('jquery/confirm',self,{
+				$js.invoke('bootstrap-modal-confirm',self,{
 					title:title,
 					body:body.replace('%s',names),
 					ok:ok
