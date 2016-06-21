@@ -1,0 +1,24 @@
+{
+  "name": "xbootgrid",
+  "main": "xbootgrid.js",
+  "homepage": "https://github.com/redcatphp/xbootgrid",
+  "authors": [
+    "jo <jo@surikat.pro>"
+  ],
+  "dependencies": {
+    "jquery":"*",
+    "bootstrap-modal-confirm"
+  },
+  "description": "",
+  "keywords": [
+    "bootgrid"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
