@@ -179,6 +179,9 @@ $.fn.xbootgrid = function(configParam){
 					var opt = opts[k];
 					var option = $('<option></option>')
 					option.attr('value',k);
+					if(k==row[column.id]){
+						option.attr('selected','selected');
+					}
 					if(typeof(opt)=='string'){
 						option.html(opt);
 					}
