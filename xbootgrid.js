@@ -159,6 +159,18 @@ $.fn.xbootgrid = function(configParam){
 				});
 			}
 		},
+        select:{
+            formatter: function(column, row) {
+                return '<div class="select"><select class="form-control" id="status"> <option>attente</option><option>verifié</option><option>affecté</option><option>terminé</option></select></div>';
+            },
+            handler: function(){
+                $(this).find('#status').click(function(e){
+                    alert('test jeff');
+                    var rowId = $(this).closest('tr').data('row-id');
+                    config.widgetOptions.editCallback(rowId);
+                });
+            }
+        },
 		structure: {
 			formatter: function(column, row) {
 				return '<button type="button" class="btn btn-icon bgm-white"><span class="fa fa-cubes"></span></button>';
