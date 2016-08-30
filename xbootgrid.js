@@ -199,10 +199,18 @@ $.fn.xbootgrid = function(configParam){
             handler: function($this){
 				var select = $(this).find('select');
                 var columnId = getColumnFor($this,this);
-                var change = config.widgetOptions.selectChange[columnId];
+                var change, init;
+                if(config.widgetOptions.selectChange){
+					change = config.widgetOptions.selectChange[columnId];
+				}
+				if(config.widgetOptions.selectInit){
+					init = config.widgetOptions.selectInit[columnId];
+				}
+                if(init){
+					init.apply(select[0]);
+				}
                 if(change){
 					select.change(change);
-					change.apply(select[0]);
 				}
             }
         },
