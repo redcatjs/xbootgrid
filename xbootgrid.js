@@ -49,6 +49,10 @@ $.fn.xbootgrid = function(configParam){
 		return $this.find('> thead > tr > th').eq(index).find('input:checkbox');
 	};
 	
+	var getColumnFor = function($this,td){
+		return $this.find('> thead > tr > th').eq($(td).index()).attr('data-column-id');
+	};
+	
 	var widgets = {
 		logo: {
 			formatter:	function(column, row){
@@ -161,14 +165,45 @@ $.fn.xbootgrid = function(configParam){
 		},
         select:{
             formatter: function(column, row) {
-                return '<div class="select"><select class="form-control" id="status"> <option>attente</option><option>verifié</option><option>affecté</option><option>terminé</option></select></div>';
+				var options = '';
+				var opts = config.widgetOptions.selectOptions[column.id];
+				if(opts instanceof Array){
+					var tmp = opts;
+					opts = {};
+					for(var i = 0; i < tmp.length; i++){
+						opts[tmp[i]] = tmp[i];
+					}
+				}
+				for(var k in opts){
+					var label;
+					var opt = opts[k];
+					var option = $('<option></option>')
+					option.attr('value',k);
+					if(typeof(opt)=='string'){
+						option.html(opt);
+					}
+					else{
+						for(var attr in opt){
+							if(attr=='label'){
+								option.html(opt[attr]);
+							}
+							else{
+								option.attr(attr,opt[attr]);
+							}
+						}
+					}
+					options += option[0].outerHTML;
+				}
+                return '<div class="select"><select class="form-control">'+options+'</select></div>';
             },
-            handler: function(){
-                $(this).find('#status').click(function(e){
-                    alert('test jeff');
-                    var rowId = $(this).closest('tr').data('row-id');
-                    config.widgetOptions.editCallback(rowId);
-                });
+            handler: function($this){
+				var select = $(this).find('select');
+                var columnId = getColumnFor($this,this);
+                var change = config.widgetOptions.selectChange[columnId];
+                if(change){
+					select.change(change);
+					change.apply(select[0]);
+				}
             }
         },
 		structure: {
