@@ -197,7 +197,7 @@ $.fn.xbootgrid = function(configParam){
 					}
 					options += option[0].outerHTML;
 				}
-                return '<div class="select"><select class="form-control">'+options+'</select></div>';
+                return '<select class="form-control">'+options+'</select>';
             },
             handler: function($this){
 				var select = $(this).find('select');
