@@ -7,7 +7,7 @@
   ],
   "dependencies": {
     "jquery":"*",
-    "bootstrap-modal-confirm":"*"
+    "bootstrap3-dialog":"*"
   },
   "description": "",
   "keywords": [

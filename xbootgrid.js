@@ -25,10 +25,6 @@ $.fn.xbootgrid = function(configParam){
 	var formatters = {};
 	var handlers = {};
 	
-	$js([
-		'bootstrap-modal-confirm'
-	]);
-	
 	var bootgridGetCellById = function(id,col){
 		var index = this.find('> thead > tr > th[data-column-id="'+col+'"]').index();
 		return this.find('> tbody > tr[data-row-id="'+id+'"] > td').eq(index).html();
@@ -248,29 +244,40 @@ $.fn.xbootgrid = function(configParam){
 				var btn = $(this).find('>button');
 				btn.click(function(e){
 					var self = $(this);
+					
 					var name = $this.bootgridGetCellById(id,config.widgetOptions.removeColumn||'id');
 					var title = config.widgetOptions.removeTitle||'Supression de « %s »';
 					var body = config.widgetOptions.removeBody||"Êtes-vous sûr de vouloir supprimer « %s » ?";
 					var ok = config.widgetOptions.removeOk||'Supprimer';
-					$js.invoke('bootstrap-modal-confirm',self,{
-						title:title.replace('%s',name),
-						body:body.replace('%s',name),
-						ok:ok.replace('%s',name)
-					});
-				});
-				btn.on('confirm-ok',function(e){
-					$.ajax({
-						method: 'POST',
-						url: config.url,
-						data: {
-							method:'delete',
-							params:[id]
-						},
-						success: function(response){
-							if(response.deleted){
-								$this.bootgrid('reload',false);
+					
+					 BootstrapDialog.show({
+						title: title.replace('%s',name),
+						message: body.replace('%s',name),
+						closable: true,
+						buttons: [{
+							label: 'Annuler',
+							action: function(dialogRef){
+								dialogRef.close();
 							}
-						}
+						},{
+							label: ok,
+							action: function(dialogRef){
+								$.ajax({
+									method: 'POST',
+									url: config.url,
+									data: {
+										method:'delete',
+										params:[id]
+									},
+									success: function(response){
+										if(response.deleted){
+											$this.bootgrid('reload',false);
+										}
+										dialogRef.close();
+									}
+								});								
+							}
+						}]
 					});
 				});
 			}
@@ -342,25 +349,35 @@ $.fn.xbootgrid = function(configParam){
 				var title = config.widgetOptions.removeTitle||'Supression multiple';
 				var body = config.widgetOptions.removeBody||"Êtes-vous sûr de vouloir supprimer « %s » ?";
 				var ok = config.widgetOptions.removeOk||'Supprimer';
-				$js.invoke('bootstrap-modal-confirm',self,{
-					title:title,
-					body:body.replace('%s',names),
-					ok:ok
-				});
-				self.on('confirm-ok',function(e){
-					$.ajax({
-						method: 'POST',
-						url: config.url,
-						data: {
-							method:'deletes',
-							params:[rows]
-						},
-						success: function(response){
-							if(response.deleted){
-								$this.bootgrid('reload',false);
-							}
+				
+				BootstrapDialog.show({
+					title: title.replace('%s',name),
+					message: body.replace('%s',name),
+					closable: true,
+					buttons: [{
+						label: 'Annuler',
+						action: function(dialogRef){
+							dialogRef.close();
 						}
-					});
+					},{
+						label: ok,
+						action: function(dialogRef){
+							$.ajax({
+								method: 'POST',
+								url: config.url,
+								data: {
+									method:'deletes',
+									params:[rows]
+								},
+								success: function(response){
+									if(response.deleted){
+										$this.bootgrid('reload',false);
+									}
+									dialogRef.close();
+								}
+							});								
+						}
+					}]
 				});
 			});
 		}
