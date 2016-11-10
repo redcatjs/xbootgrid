@@ -5,7 +5,7 @@ $.fn.xbootgrid = function(configParam){
 		selection: true,
 		multiSelect: true,
 		rowSelect: true,
-		rowCount:[10, 25, 50, -1],
+		rowCount:[5, 10, 25, 50, -1],
 		keepSelection: true,
 		css: {
 			icon: 'fa icon',
