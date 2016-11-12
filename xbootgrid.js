@@ -388,7 +388,7 @@ $.fn.xbootgrid = function(configParam){
 		$this.bootgridGetCellById = bootgridGetCellById;
 		
 		//nav pagination
-		var pageKey = 'page-'+$this.getId();
+		var pageKey = 'page-'+$this.requiredId();
 		var current = jstack.route.getSubParam(pageKey)||1;
 		var elementConfig = $.extend(true,{},config, {current:current} );
 		$(window).on('subHashchange',function(){
