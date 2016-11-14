@@ -146,6 +146,10 @@ $.fn.xbootgrid = function(configParam){
 			}
 		},
 		dateformat: function(column, row) {
+			var date = new Date(row[column.id]);
+			return date('d/m/Y à H:i',Math.floor(date.getTime()/1000));
+		},
+		timestampformat: function(column, row){
 			return date('d/m/Y à H:i',row[column.id]);
 		},
 		edit: {
