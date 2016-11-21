@@ -1,3 +1,4 @@
+$js.require('bootstrap');
 $.fn.xbootgrid = function(configParam){
 	
 	var config = {
@@ -146,6 +147,10 @@ $.fn.xbootgrid = function(configParam){
 			}
 		},
 		dateformat: function(column, row) {
+			var datetime = new Date(row[column.id]);
+			return date('d/m/Y à H:i',Math.floor(datetime.getTime()/1000));
+		},
+		timestampformat: function(column, row){
 			return date('d/m/Y à H:i',row[column.id]);
 		},
 		edit: {
@@ -212,6 +217,19 @@ $.fn.xbootgrid = function(configParam){
 					select.change(change);
 				}
             }
+        },
+        comment: {
+        	formatter: function(column, row){
+        		return $('<div>'+row[column.id]+'</div>').text()+'<div style="display:none;">'+row[column.id]+'</div>';
+        	},
+        	handler: function($this){
+        		var title = $(this).find('>div').html();
+        		$(this).tooltip({
+        			html:true,
+        			title:title,
+        			container:document.body,
+        		});
+        	},
         },
 		structure: {
 			formatter: function(column, row) {
@@ -385,10 +403,13 @@ $.fn.xbootgrid = function(configParam){
 	
 	return this.each(function(index){
 		var $this = $(this);
+		
+		$this.attr('j-unscope',true);
+		
 		$this.bootgridGetCellById = bootgridGetCellById;
 		
 		//nav pagination
-		var pageKey = 'page-'+$this.getId();
+		var pageKey = 'page-'+$this.requiredId();
 		var current = jstack.route.getSubParam(pageKey)||1;
 		var elementConfig = $.extend(true,{},config, {current:current} );
 		$(window).on('subHashchange',function(){
