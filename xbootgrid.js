@@ -224,9 +224,12 @@ $.fn.xbootgrid = function(configParam){
         	},
         	handler: function($this){
         		var title = $(this).find('>div').html();
-        		$(this).tooltip({
+        		$(this).popover({
         			html:true,
         			title:title,
+        			animation:true,
+        			placement: "left",
+        			trigger: "click",
         			container:document.body,
         		});
         	},
