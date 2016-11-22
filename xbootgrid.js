@@ -232,6 +232,9 @@ $.fn.xbootgrid = function(configParam){
         			trigger: "click",
         			container:document.body,
         		});
+        		$(this).hover(function(){
+        			 $(this).css('cursor','pointer');
+        		});
         	},
         },
 		structure: {
