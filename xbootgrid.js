@@ -410,7 +410,7 @@ $.fn.xbootgrid = function(configParam){
 	return this.each(function(index){
 		var $this = $(this);
 		
-		$this.attr('j-unscope',true);
+		//$this.attr('j-unscope',true);
 		
 		$this.bootgridGetCellById = bootgridGetCellById;
 		
