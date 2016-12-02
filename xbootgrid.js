@@ -21,7 +21,7 @@ $.fn.xbootgrid = function(configParam){
 			search: "Rechercher",
 			infos: "Affichage de {{ctx.start}} à {{ctx.end}} sur un total de {{ctx.total}} entrées"
 		},
-		widgetOptions:{}
+		widgetOptions:{},
 	};
 	var formatters = {};
 	var handlers = {};
@@ -158,8 +158,15 @@ $.fn.xbootgrid = function(configParam){
 				return '<button type="button" class="btn btn-icon bgm-white"><span class="fa fa-pencil"></span></button>';
 			},
 			handler: function(){
+				var tr = $(this).closest('tr');
+				var rowId = tr.data('row-id');
+				if(config.widgetOptions.editEvent){
+					tr.on(config.widgetOptions.editEvent,function(){
+						config.widgetOptions.editCallback(rowId);
+					});
+				}
+				
 				$(this).find('>button').click(function(e){
-					var rowId = $(this).closest('tr').data('row-id');
 					config.widgetOptions.editCallback(rowId);
 				});
 			}
@@ -435,7 +442,7 @@ $.fn.xbootgrid = function(configParam){
 				current = currentPage;
 				jstack.route.setSubHash(pageKey+'='+currentPage);
 			}
-			
+			$this.wrap('<div class="bootgrid-table-wrapper"/>');
 			$this.find('> thead > tr > th[data-handler][data-handler!=""]').each(function(){
 				var self = $(this);
 				var dHandler = self.attr('data-handler');
