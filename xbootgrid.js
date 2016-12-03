@@ -450,24 +450,27 @@ $.fn.xbootgrid = function(configParam){
 		
 		$this.on('loaded.rs.jquery.bootgrid', function(e){
 			
-			//nav pagination
-			var currentPage = $this.bootgrid('getCurrentPage')||1;
-			if(currentPage!=current){
-				current = currentPage;
-				jstack.route.setSubHash(pageKey+'='+currentPage);
-			}
-			$this.wrap('<div class="bootgrid-table-wrapper"/>');
-			
 			// Auto with column for scrollable tbody
-			if($this.hasClass('scrollable')){
+			var scrollable = $this.hasClass('scrollable');
+			if(scrollable){
 				var $bodyCells = $this.find('tbody tr:first').children(),
 					colWidth;
 				colWidth = $bodyCells.map(function() {
 					return $(this).width();
 				}).get();
-				$this.find('thead tr').children().each(function(i, v) {
-					$(v).width(colWidth[i]);
+				
+				var percentWith = 100/colWidth.length;
+				$this.find('> thead > tr > th, > tbody > tr > td').css('width',percentWith+'%');
+				$this.find('> thead > tr > th').each(function(i){
+					$(this).css('min-width',colWidth[i]+'px');
 				});
+			}
+			
+			//nav pagination
+			var currentPage = $this.bootgrid('getCurrentPage')||1;
+			if(currentPage!=current){
+				current = currentPage;
+				jstack.route.setSubHash(pageKey+'='+currentPage);
 			}
 			
 			
