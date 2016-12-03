@@ -459,8 +459,10 @@ $.fn.xbootgrid = function(configParam){
 					return $(this).width();
 				}).get();
 				
-				var percentWith = 100/colWidth.length;
-				$this.find('> thead > tr > th, > tbody > tr > td').css('width',percentWith+'%');
+				if(colWidth.length){
+					var percentWith = 100/colWidth.length;
+					$this.find('> thead > tr > th, > tbody > tr > td').css('width',percentWith+'%');
+				}
 				$this.find('> thead > tr > th').each(function(i){
 					$(this).css('min-width',colWidth[i]+'px');
 				});
