@@ -160,14 +160,28 @@ $.fn.xbootgrid = function(configParam){
 			handler: function(){
 				var tr = $(this).closest('tr');
 				var rowId = tr.data('row-id');
+				
+				var editCallback;
+				if(typeof(config.widgetOptions.editCallback)=='function'){
+					editCallback = config.widgetOptions.editCallback;
+				}
+				else if(typeof(config.widgetOptions.editCallback)=='string'){
+					editCallback = function(rowId){
+						jstack.route(config.widgetOptions.editCallback+rowId);
+					};
+				}
+				else{
+					return;
+				}
+				
 				if(config.widgetOptions.editEvent){
 					tr.on(config.widgetOptions.editEvent,function(){
-						config.widgetOptions.editCallback(rowId);
+						editCallback(rowId);
 					});
 				}
 				
 				$(this).find('>button').click(function(e){
-					config.widgetOptions.editCallback(rowId);
+					editCallback(rowId);
 				});
 			}
 		},
