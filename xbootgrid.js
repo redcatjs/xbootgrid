@@ -456,21 +456,25 @@ $.fn.xbootgrid = function(configParam){
 			// Auto with column for scrollable tbody
 			var scrollable = $this.hasClass('scrollable');
 			if(scrollable){
-				var wTotal = 0;
-				var td = $this.find('> tbody > tr:first > td');
-				var th = $this.find('> thead > tr:first > th');
-				var colWidth = td.map(function(){
-					var w = $(this).width();
-					wTotal += w;
-					return w;
+				var td = $this.find('> tbody > tr > td');
+				var th = $this.find('> thead > tr > th');
+				var colWidth = $this.find('> tbody > tr:first > td').map(function(){
+					return $(this).width();
 				}).get();
 				var wContainer = $this.width();
-				var addPx = wContainer/th.length;
+				var wTotal = $this.find('>tbody >tr:eq(0)').width();
+				var addPx = (wContainer-wTotal)/th.length;
+				
+				var widths = [];
 				th.each(function(i){
-					var w = (colWidth[i]+addPx)+'px';
-					$(this).css('width',w);
-					$this.find('> tbody > tr > td:eq('+i+')').css('width',w);
+					var w = $(this).width()+addPx;
+					widths.push(w);
+					$(this).width(w);
 				});
+				td.each(function(i){
+					$(this).width(widths[i]);
+				});
+				
 				
 			}
 			
