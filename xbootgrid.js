@@ -1,4 +1,5 @@
 $js.require('bootstrap');
+
 $.fn.xbootgrid = function(configParam){
 	
 	var config = {
@@ -447,25 +448,30 @@ $.fn.xbootgrid = function(configParam){
 				$this.bootgrid('reload',false);
 			}
 		});
+
 		
 		$this.on('loaded.rs.jquery.bootgrid', function(e){
+			
 			
 			// Auto with column for scrollable tbody
 			var scrollable = $this.hasClass('scrollable');
 			if(scrollable){
-				var $bodyCells = $this.find('tbody tr:first').children(),
-					colWidth;
-				colWidth = $bodyCells.map(function() {
-					return $(this).width();
+				var wTotal = 0;
+				var td = $this.find('> tbody > tr:first > td');
+				var th = $this.find('> thead > tr:first > th');
+				var colWidth = td.map(function(){
+					var w = $(this).width();
+					wTotal += w;
+					return w;
 				}).get();
-				
-				if(colWidth.length){
-					var percentWith = 100/colWidth.length-1;
-					$this.find('> thead > tr > th, > tbody > tr > td').css('width',percentWith+'%');
-				}
-				$this.find('> thead > tr > th').each(function(i){
-					$(this).css('min-width',colWidth[i]+'px');
+				var wContainer = $this.width();
+				var addPx = wContainer/th.length;
+				th.each(function(i){
+					var w = (colWidth[i]+addPx)+'px';
+					$(this).css('width',w);
+					$this.find('> tbody > tr > td:eq('+i+')').css('width',w);
 				});
+				
 			}
 			
 			//nav pagination
@@ -495,6 +501,7 @@ $.fn.xbootgrid = function(configParam){
 				selectionWidgets.remove($this);
 			}
 		});
+		
 		$this.bootgrid(elementConfig);
 		
 	});	
