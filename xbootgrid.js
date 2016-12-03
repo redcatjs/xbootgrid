@@ -457,6 +457,20 @@ $.fn.xbootgrid = function(configParam){
 				jstack.route.setSubHash(pageKey+'='+currentPage);
 			}
 			$this.wrap('<div class="bootgrid-table-wrapper"/>');
+			
+			// Auto with column for scrollable tbody
+			if($this.hasClass('.scrollable'){
+				var $bodyCells = $this.find('tbody tr:first').children(),
+					colWidth;
+				colWidth = $bodyCells.map(function() {
+					return $(this).width();
+				}).get();
+				$this.find('thead tr').children().each(function(i, v) {
+					$(v).width(colWidth[i]);
+				});
+			}
+			
+			
 			$this.find('> thead > tr > th[data-handler][data-handler!=""]').each(function(){
 				var self = $(this);
 				var dHandler = self.attr('data-handler');
