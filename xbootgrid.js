@@ -459,7 +459,7 @@ $.fn.xbootgrid = function(configParam){
 			$this.wrap('<div class="bootgrid-table-wrapper"/>');
 			
 			// Auto with column for scrollable tbody
-			if($this.hasClass('.scrollable'){
+			if($this.hasClass('.scrollable')){
 				var $bodyCells = $this.find('tbody tr:first').children(),
 					colWidth;
 				colWidth = $bodyCells.map(function() {
