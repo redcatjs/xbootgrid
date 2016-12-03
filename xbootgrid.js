@@ -460,7 +460,7 @@ $.fn.xbootgrid = function(configParam){
 				}).get();
 				
 				if(colWidth.length){
-					var percentWith = 100/colWidth.length;
+					var percentWith = 100/colWidth.length-1;
 					$this.find('> thead > tr > th, > tbody > tr > td').css('width',percentWith+'%');
 				}
 				$this.find('> thead > tr > th').each(function(i){
