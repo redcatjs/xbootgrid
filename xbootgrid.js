@@ -452,32 +452,6 @@ $.fn.xbootgrid = function(configParam){
 		
 		$this.on('loaded.rs.jquery.bootgrid', function(e){
 			
-			
-			// Auto with column for scrollable tbody
-			var scrollable = $this.hasClass('scrollable');
-			if(scrollable){
-				var td = $this.find('> tbody > tr > td');
-				var th = $this.find('> thead > tr > th');
-				var colWidth = $this.find('> tbody > tr:first > td').map(function(){
-					return $(this).width();
-				}).get();
-				var wContainer = $this.width();
-				var wTotal = $this.find('>tbody >tr:eq(0)').width();
-				var addPx = (wContainer-wTotal)/th.length;
-				
-				var widths = [];
-				th.each(function(i){
-					var w = $(this).width()+addPx;
-					widths.push(w);
-					$(this).width(w);
-				});
-				td.each(function(i){
-					$(this).width(widths[i]);
-				});
-				
-				
-			}
-			
 			//nav pagination
 			var currentPage = $this.bootgrid('getCurrentPage')||1;
 			if(currentPage!=current){
